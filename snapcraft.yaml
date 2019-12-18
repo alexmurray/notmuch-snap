@@ -1,0 +1,38 @@
+name: notmuch
+base: core18 # the base snap is the execution environment for this snap
+version: 0.29.3
+summary: thread-based email index, search and tagging
+description: |
+  Notmuch is a system for indexing, searching, reading, and tagging large
+  collections of email messages in maildir or mh format. It uses the Xapian
+  library to provide fast, full-text search with a very convenient search
+  syntax.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: strict
+
+apps:
+  notmuch:
+    command: notmuch
+    plugs:
+      - home
+
+parts:
+  notmuch:
+    plugin: autotools
+    source: https://notmuchmail.org/releases/notmuch-0.29.3.tar.xz
+    source-type: tar
+    build-packages:
+      - libglib2.0-dev
+      - libgmime-3.0-dev
+      - libtalloc-dev
+      - libxapian-dev
+      - zlib1g-dev
+    build-snaps:
+      - emacs
+    stage-packages:
+      - libassuan0
+      - libgmime-3.0-0
+      - libgpgme11
+      - libtalloc2
+      - libxapian30
